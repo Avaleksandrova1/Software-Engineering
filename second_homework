@@ -1,0 +1,108 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+public class Main {
+    public static class Student {
+        private String name;
+        private String mark;
+        private String key;
+
+        // build
+        public Student() {
+        }
+
+        public Student(String name, String mark, String key) {
+            this.name = name;
+            this.mark = mark;
+            this.key = key;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getMark() {
+            return mark;
+        }
+
+        public void setMark(String mark) {
+            this.mark = mark;
+        }
+
+        public String getKey() {
+            return mark;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Student> array = new ArrayList<>();
+        System.out.println("^_^--Who answer in class?--^_^");
+        System.out.println("You need to add the students with /a");
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            String line = sc.nextLine();
+            switch (line) {
+                case "/h":
+                    System.out.println("1. /r - choose random student");
+                    System.out.println("2. /l - list of student with grades");
+                    break;
+                case "/a":
+                    addStudents(array);
+                    break;
+                case "r":
+                    List<Integer> nums = IntStream.rangeClosed(1, 10)
+                            .boxed().collect(Collectors.toList());
+                    int n = 2;
+                    List<Integer> random = getRandomElement(nums, n);
+                    System.out.println(random);
+                    //if .
+                case "l":
+                    writeList(array);
+                    System.exit(0);
+            }
+        }
+
+    }
+    public static<T> List<T> getRandomElement(List<T> list, int n) {
+        if (n > list.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        List<T> copy = new ArrayList<>(list);
+        Collections.shuffle(copy);
+        return copy.subList(0, n);
+    }
+
+    public static void addStudents(ArrayList<Student> array) {
+        Scanner sc_ = new Scanner(System.in);
+        System.out.println("Введите имя студента:");
+        String name = sc_.nextLine();
+        Student s = new Student();
+        s.setName(name);
+        array.add(s);
+    }
+
+    public static void writeList(ArrayList<Student> array) {
+        if (array.size() == 0) {
+            System.out.println("Error! Missing list");
+            return;
+        }
+        for (int i = 0; i < array.size(); ++i) {
+            Student s = array.get(i);
+            System.out.println(s.getName() + "\t\t" + s.getKey() + "\t" + s.getMark());
+        }
+    }
+}
